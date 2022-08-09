@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Botao from '../../componentes/Botao';
 import { EntradaTexto } from '../../componentes/EntradaTexto';
 import estilos from './estilos';
+import { cadastrar } from '../../servicos/requisicoesFirebase';
+
 
 export default function Cadastro({ navigation }) {  
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmaSenha, setConfirmaSenha] = useState('');
+
+  async function realizarCadastro(){
+    await cadastrar(email, senha, confirmaSenha);
+    setEmail('')
+    setSenha('')
+    setConfirmaSenha('')
+  }
 
   return (
     <View style={estilos.container}>
@@ -30,7 +39,7 @@ export default function Cadastro({ navigation }) {
         secureTextEntry
       />
       
-      <Botao onPress={() => {}}>CADASTRAR</Botao>
+      <Botao onPress={() => realizarCadastro()}>CADASTRAR</Botao>
     </View>
   );
 }
