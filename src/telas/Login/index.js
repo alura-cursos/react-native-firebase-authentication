@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
         setMensagemError('Email ou senha não conferem')
       } 
       else {
-        navigation.navigate('Principal')
+        navigation.replace('Principal')
       }
     }
   }
