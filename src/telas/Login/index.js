@@ -7,6 +7,7 @@ import estilos from './estilos';
 import { Alerta } from '../../componentes/Alerta';
 import { auth } from '../../config/firebase';
 import { alteraDados } from '../../utils/comum';
+import { entradas } from './entradas';
 
 import animacaoCarregando from '../../../assets/animacaoCarregando.gif';
 
@@ -61,21 +62,18 @@ export default function Login({ navigation }) {
 
   return (
     <View style={estilos.container}>
-      <EntradaTexto 
-        label="E-mail"
-        value={dados.email}
-        onChangeText={valor => alteraDados('email', valor, dados, setDados)}
-        error={statusError == 'email'}
-        messageError={mensagemError}
-      />
-      <EntradaTexto
-        label="Senha"
-        value={dados.senha}
-        onChangeText={valor => alteraDados('senha', valor, dados, setDados)}
-        secureTextEntry
-        error={statusError == 'senha'}
-        messageError={mensagemError}
-      />
+      {
+        entradas.map((entrada) => {
+          return (
+            <EntradaTexto
+              key={entrada.id}
+              {...entrada}
+              value={dados[entrada.name]}
+              onChangeText={valor => alteraDados(entrada.name, valor, dados, setDados)}
+            />  
+          )
+        })
+      }
 
       <Alerta 
         mensagem={mensagemError}
