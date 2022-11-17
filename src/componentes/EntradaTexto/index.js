@@ -8,11 +8,22 @@ export function EntradaTexto({
   onChangeText, 
   secureTextEntry, 
   error, 
-  messageError 
+  messageError,
+  pattern 
 }) {
   const [secureMode, setSecureMode] = useState(secureTextEntry);
 
-  const showError = value == null || error
+  function regexValidation() {
+    if(!value) return false;
+    if (pattern) {
+      const condition = new RegExp(pattern);
+      return !condition.test(value);
+    }
+
+    return false;
+  }
+
+  const showError = value == null || error || regexValidation();
 
   return (
     <>
